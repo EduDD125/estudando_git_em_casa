@@ -1,0 +1,105 @@
+Existem três áreas distintas na máquina local que são
+manipulados pelo Git.
+
+
+##########################################################
+########      Areas do repositório local Git      ########
+##########################################################
+# Work tree (Diretório de trabalho): área diretamente
+alterada pelo usuário sem a necessidade dos comandos
+do Git. Aqui estão os arquivos a serem versionados. 
+Funciona com um diretório comum.
+
+# Stage Area (index): área para armazenar temporariamente
+os aquivos alterados que serão versionados. Ela serve para
+que o usuário separe de todos os arquivos alterados
+apenas aquele que ele deseje versionar naquele momento.
+
+# Repositório local: área onde ocorre o versionamento.
+Todos os arquivos dessa área já foram incluidos no his-
+tórico de commits.
+##########################################################
+
+
+Arquivos criados ou apena alterados são considerados "untracked"/
+"not staged"Quando damos o comando "git status", ele são 
+sinalizados com a cor vermelha.
+
+Quando damos o comando "git add <file_name>" este vai para
+stage area. Assim esse arquivo passa a se considerados
+"staged", sendo marcado com a cor verde quando damos o coman-
+do "get status".
+
+Podemos incluir os arquivos "staged" com o comando 
+"git commit -m <mensagem de commit>".
+
+Quando um arquivo "tracked" é alterado, ele passa a sere
+novamente um arquivo "untracked"/"not staged".
+
+
+
+##########################################################
+########           Comando relevante!!!           ########
+##########################################################
+
+
+
+# git add -am <mensagem commit>
+    
+    Podemos fazer um arquivo que voltou a ser "untracked"/"not 
+staged" ser adicionado no histórico de commits diretamente
+por meio do comando "git add -am <mensagem de commit>".
+Obs: este arquivo já deve ter sido observado pelo git antes,
+ou seja, ele já deve ter sido "tracked" anteriormente. Caso
+o arquivo nunca tenha ido para a "stage area" antes, esse
+comando incluir o arquivo no repositório local.
+
+
+
+# git add <file_name_1> <file_name_2> ...
+
+    Podemos adicionar multiplos arquivos para a stage area conca
+tenando seus nomes depois do comando "git add".
+
+
+
+# git add .
+
+    Podemos adicionar todos os arquivos "untracked" dentro do dire-
+tório que estamos atualmente para a stage area quando realizamos o
+comando " git add . ".
+obs: todos os arquivos que estão fora do diretório acessado atual-
+mente acessado pelo usuário não serão incluidos na stage area.
+
+
+
+# git add --all
+
+    Usamos o comando "git add --all" para adicionar todos os arquivos
+"untracker" existentes no repositório git. Isso vale também para os 
+arquivos fora do diretório onde o usuário se encotra.
+
+
+
+# git status
+
+    O comando "git status" serve para mostrar o atual estágio do diretório
+de trabalho observado pelo repositório git iniciado. Ele mostrar todos os
+arquivos "untracked"/"not staged" e os "tracked"/"staged". Ele direferencia
+esse tipos, respectivamente, pelas cores vermelho e verde.
+
+
+
+# git log
+
+    Com esse comando podemos verificar o histório de commits do nosso repor-
+sitório local. Obs: isso quer dizer que se o repositório local não tiver atua-
+lizado com novas alterações do repositório remoto, os históricos de commit 
+desse repositórios distintos será diferente.
+
+
+
+# git log --online
+
+    O comando "git log --log oneline" seve para mostra o histórico de commits
+    de forma simplificada em apenas uma linha.
