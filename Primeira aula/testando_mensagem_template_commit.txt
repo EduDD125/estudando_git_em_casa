@@ -1,0 +1,4 @@
+eu criei um arquivo ".gitmessage.txt" no diretorio do meu usuario
+e configurei o arquivo de configuração do git para usar esse modelos
+de mensagem de commit e todos com repositório que se encontrarem
+dentro do diretorio desse usuario.
