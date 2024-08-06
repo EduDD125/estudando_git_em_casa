@@ -103,3 +103,13 @@ desse repositórios distintos será diferente.
 
     O comando "git log --log oneline" seve para mostra o histórico de commits
     de forma simplificada em apenas uma linha.
+
+
+
+# git diff <file_name>
+
+    Serve para destacar as alterações em arquivos do diretório de trabalho que
+    ainda não foram movidos para a "stage area".
+
+
+
