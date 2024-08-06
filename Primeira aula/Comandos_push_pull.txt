@@ -1,0 +1,159 @@
+##########################################################
+########       Comandos git push e git pull       ########
+##########################################################
+
+# git push
+    copia o histórico de commits do repositório local para o
+    repositório remoto. O objetivo desse comando é comparti-
+    lhar suas alterações em um projeto com os outros progra-
+    madores . Comando mais lento pois envolve comunicação 
+    via rede.
+
+
+
+# git pull
+    Esse comando serve para atualizar o histórico de commits de
+    um repositório local com as novas alterações do repositório
+    remoto.
+    As operações internas desse comando são:
+    -excuta-se primeiramente o comando fetch de forma implicita,
+    para copiar histórico de commits do repositório remoto ao 
+    repositório local.
+    -segundo, se executa o comando implicitamente o comando merge,
+    que atualiza o diretório local com o histórico de commits mais 
+    recente do repositório remoto.
+
+
+
+
+##########################################################
+#######       Diagrama comandos pull e push       ########
+##########################################################
+
+###############               ##############                   ################               #################
+#  diretório  #   git add     # stage area #    git commit     #  repositório #   git push    #  repositório  #
+# de trabalho #   ------->    ##############    --------->     #     local    #    ------>    #    remoto     #
+###############                                                ################               #################
+    ^                                                               |   ^          git merge          |
+    |                     git merge                                 |   |-----------------------------|              
+    |---------------------------------------------------------------|
+
+    pull = fetch + merge
+
+
+
+##########################################################
+#######       Aprofundando comandos git push       #######
+##########################################################
+
+Para que o comando git push envie seu novo histórico de commits para o re-
+positório remoto, é necessário que esteja configurado qual repositório é
+esse em sua máquina
+
+
+..........................Exemplo de excussão......................
+|> git push                                                       |
+|    fatal: No configured push destination.                       |
+|    Either specify the URL from the command-line or configure a  |
+|     remote repository using                                     |
+|                                                                 |
+|    git remote add <name> <url>                                  |
+|    and then push using the remote name                          |
+|    git push <name                                               |
+...................................................................
+
+precisamos configura o repositório remote com o comando 
+"git remote add <name> <url_do_repositório>". Exemplo:
+
+..................................................................................
+| > git remote add origin "https://www.github.com/Cleitinho/CleitinhoRepository" |
+..................................................................................
+
+
+Também é necessário configurar usuário e email para compartilhar seu histórico
+de commits. Assim, usamos os comandos "git config user.email 'exemplo@mail.com' "
+e " git config user.name 'Some Name' " para alterar o arquivo de configuração do
+git para haver a identificação de quem está compartilhando informações com os repo-
+sitórios.
+
+Com o arquivo de configuração corretamente configurado, podemos fazer o comando
+"git push - origin main". O modificados "-u" liga a branch local com a branch re-
+mota. O termo "origin" é um alias para a URL do repositório remoto.
+
+Caso o SSH entre a máquina e o GitHub não esteja configurado, é necessário seguir
+o seguinte tutorial: 
+"https://docs.github.com/pt/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"
+
+
+Para obter as atulização no repositório remoto basta realizar o comando
+" git pull ".
+
+
+
+
+##########################################################
+########         Conflitos de push e pull         ########
+##########################################################
+
+Considere o seguinte cenário de desenvolvimento:
+1. Um Desenvolvedor A criou um arquivo chamado Main.java
+2. Na sequência, ele executou os comandos add, commit e push.
+3. A Desenvolvedora B executou um comando pull e obteve o arquivo.
+4. Na sequência, ela o editou e executou também os comandos add, commit e push.
+5. Nesse meio tempo, o Desenvolvedor A notou um erro no arquivo e o corrigiu.
+6. Para compartilhar, realizou novamente os três comandos: add, commit e push.
+O comando push irá falhar! Por quê?
+
+A mesangem de erro recebida nessa situação nos explicará o que está ocorrendo
+
+..........................................................................................
+|    > git push origin main                                                              | 
+|    To github.com:prof-lucas-ifsp/class-project.git                                     |
+|    ! [rejected] main -> main (fetch first)                                             |
+|    error: failed to push some refs to 'github.com:prof-lucas-ifsp/class-project.git'   |
+|    hint: Updates were rejected because the remote contains work that you do            |
+|    hint: not have locally. This is usually caused by another repository pushing        |
+|    hint: to the same ref. You may want to first integrate the remote changes           |
+|    hint: (e.g., 'git pull ...') before pushing again.                                  |
+|    hint: See the 'Note about fast-forwards' in 'git push --help' for details.          |
+..........................................................................................
+
+O Desenvolvedor A possui seu repositório desatualizado, logo deve realizar o comando
+git pull. Nesse caso, ocorre o seguinte erro com esse comando:
+
+...........................................................................
+|    > git pull                                                           |
+|    Auto-merging Tc1.java                                                |
+|    CONFLICT (content): Merge conflict in Tc1.java                       |
+|    Automatic merge failed; fix conflicts and then commit the result.    |
+...........................................................................
+
+O git não consegue realizar o merge entre as versões, pois as mesmas parte do código
+estão sendo alteradas simultaneamente.
+PS: Caso o git ainda não tenha uma opção padrão para resolução de conflitos, primeiro
+escolha a opção merge por meio do comando git config pull.rebase false
+
+Nesse caso, cabe ao desenvolvedor resolver o conflito e indicar qual versão é a correta ou,
+ainda, realizar uma terceira implementação que combine as ambas.
+Ele realizará isso abrindo o arquivo e realizará alterações nesse:
+remover os marcadores de versão, escolhendo qual código deixar no local.
+Exemplo:
+.............................................................
+|    "<<<<<<< HEAD"                                         |
+|    # codigo do desenvolvedor                              |
+|    "======="                                              |
+|    # codigo do repositório remoto                         |
+|    ">>>>>>> 8b7b4b2f2047d913df5081810422f907129a3348""    |
+.............................................................
+
+
+Esse exemplo não condis com situação reais, onde diversos arquivos pode estar
+em conflito.
+
+Para evitar essas situações (Merge Hell) são boas práticas realizar pequenos
+commits e haver integrações frequentes (git push).
+
+Atualizar seu trabalho com git pull frequente tbm é necessário.
+
+Diversar IDE ajudam melhoram a situação de conflito no git. Usa-las facilitará
+seu trabalho.
